@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여정 완료</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .celebration {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .message {
+            font-size: 20px;
+            color: #444;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9ff;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        /* 도움 리소스 섹션 */
+        .help-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .help-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .help-title::before {
+            content: "☎️ ";
+        }
+
+        .help-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .help-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .help-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .help-item-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .help-item-number {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .help-item-desc {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .help-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        /* 버튼 */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9ff;
+            transform: translateY(-3px);
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 25px;
+                margin: 20px;
+            }
+
+            .celebration {
+                font-size: 48px;
+            }
+
+            .title {
+                font-size: 26px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .message {
+                font-size: 16px;
+                padding: 20px;
+            }
+
+            .help-title {
+                font-size: 20px;
+            }
+
+            .help-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .help-item-number {
+                font-size: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 14px 30px;
+                font-size: 16px;
+            }
+        }
+
+        /* 별 애니메이션 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 배경 별 효과 -->
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <div class="celebration">🎉</div>
+        
+        <h1 class="title">모든 여정을 완료했어요!</h1>
+        <p class="subtitle">정말 수고 많았어요. 여기까지 오는 게 쉽지 않았을 거예요.</p>
+
+        <div class="message">
+            "살아있다는 건,<br>
+            아직 쓰지 않은 이야기 한 장을<br>
+            가지고 있다는 뜻이에요."<br><br>
+            <strong>너의 생명은 세상에서<br>단 하나뿐인 빛이에요.</strong>
+        </div>
+
+        <!-- 도움 리소스 -->
+        <div class="help-section">
+            <div class="help-title">도움이 필요할 땐</div>
+            
+            <div class="help-list">
+                <div class="help-item">
+                    <div>
+                        <div class="help-item-name">청소년 전화</div>
+                        <div class="help-item-desc">24시간 운영</div>
+                    </div>
+                    <div class="help-item-number">1388</div>
+                </div>
+
+                <div class="help-item">
+                    <div>
+                        <div class="help-item-name">자살예방상담</div>
+                        <div class="help-item-desc">24시간 운영</div>
+                    </div>
+                    <div class="help-item-number">1393</div>
+                </div>
+
+                <div class="help-item">
+                    <div>
+                        <div class="help-item-name">생명의전화</div>
+                        <div class="help-item-desc">24시간 위기상담</div>
+                    </div>
+                    <div class="help-item-number">1588-9191</div>
+                </div>
+
+                <div class="help-item">
+                    <div>
+                        <div class="help-item-name">카카오톡 상담</div>
+                        <div class="help-item-desc">익명 채팅상담</div>
+                    </div>
+                    <div class="help-item-number" style="font-size: 16px;">@마음이음</div>
+                </div>
+            </div>
+
+            <div class="help-footer">
+                혼자 견디지 마세요.<br>
+                언제든 도움을 청할 수 있어요.
+            </div>
+        </div>
+
+        <!-- 버튼 -->
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="closeWidget()">확인</button>
+            <button class="btn btn-secondary" onclick="shareExperience()">경험 공유하기</button>
+        </div>
+    </div>
+
+    <script>
+        let appHashId = '';
+        let isMobile = false;
+
+        // 초기화
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'init') {
+                appHashId = event.data.appHashId;
+                isMobile = event.data.isMobile || false;
+
+                // 위젯 크기 설정
+                window.parent.postMessage({
+                    type: 'WidgetRearrange',
+                    width: '100%',
+                    height: '100%',
+                    anchor: 'middle'
+                }, '*');
+
+                // 별 생성
+                createStars();
+            }
+        });
+
+        // 별 생성 (배경 효과)
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 50;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // 위젯 닫기
+        function closeWidget() {
+            window.parent.postMessage({
+                type: 'close'
+            }, '*');
+        }
+
+        // 경험 공유하기 (선택사항)
+        function shareExperience() {
+            // 게시판이나 다른 공간으로 이동
+            window.parent.postMessage({
+                type: 'shareExperience'
+            }, '*');
+            
+            // 또는 간단히 완료 메시지
+            alert('여러분의 이야기를 나누는 것은 다른 사람에게 큰 힘이 됩니다. 💕');
+            closeWidget();
+        }
+
+        // 전화번호 클릭 시 복사 (선택사항)
+        document.querySelectorAll('.help-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const number = this.querySelector('.help-item-number').textContent;
+                const name = this.querySelector('.help-item-name').textContent;
+                
+                // 모바일에서는 전화 걸기
+                if (isMobile && number.match(/^\d+$/)) {
+                    window.location.href = `tel:${number}`;
+                } else {
+                    // PC에서는 클립보드 복사
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(number).then(() => {
+                            showToast(`${name} 번호가 복사되었습니다: ${number}`);
+                        });
+                    }
+                }
+            });
+        });
+
+        // 토스트 메시지
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 25px;
+                font-size: 14px;
+                z-index: 10000;
+                animation: fadeIn 0.3s ease;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
