@@ -13,7 +13,7 @@
         }
 
         body {
-            width: 100%;
+            width: 100vw;
             height: 100vh;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -21,17 +21,50 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
+        }
+
+        /* 꽃 이모지 내리는 효과 */
+        .flower-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10%;
+                transform: translateX(0) rotate(0deg);
+            }
+            100% {
+                top: 110%;
+                transform: translateX(var(--sway)) rotate(360deg);
+            }
         }
 
         .container {
-            width: 100%;
-            max-width: 600px;
+            width: 90%;
+            max-width: 800px;
             background: white;
             border-radius: 30px;
-            padding: 50px 40px;
+            padding: 60px 50px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             text-align: center;
-            animation: fadeInUp 0.6s ease;
+            animation: fadeInUp 0.8s ease;
+            position: relative;
+            z-index: 2;
         }
 
         @keyframes fadeInUp {
@@ -46,8 +79,8 @@
         }
 
         .celebration {
-            font-size: 64px;
-            margin-bottom: 20px;
+            font-size: 80px;
+            margin-bottom: 25px;
             animation: bounce 1s ease infinite;
         }
 
@@ -61,44 +94,86 @@
         }
 
         .title {
-            font-size: 32px;
+            font-size: 38px;
             font-weight: 700;
             color: #333;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .subtitle {
-            font-size: 18px;
+            font-size: 20px;
             color: #666;
             line-height: 1.6;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
+        /* 메시지 박스 - 페이드인 애니메이션 */
         .message {
-            font-size: 20px;
+            font-size: 24px;
             color: #444;
-            line-height: 1.8;
-            margin-bottom: 40px;
-            padding: 25px;
-            background: #f8f9ff;
-            border-radius: 15px;
-            border-left: 4px solid #667eea;
+            line-height: 2;
+            margin-bottom: 50px;
+            padding: 40px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #fff5f8 100%);
+            border-radius: 20px;
+            border-left: 5px solid #667eea;
+            opacity: 0;
+            animation: fadeInMessage 2s ease 0.5s forwards;
+        }
+
+        @keyframes fadeInMessage {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-line {
+            opacity: 0;
+            animation: fadeInLine 1.5s ease forwards;
+        }
+
+        .message-line:nth-child(1) { animation-delay: 1s; }
+        .message-line:nth-child(2) { animation-delay: 1.3s; }
+        .message-line:nth-child(3) { animation-delay: 1.6s; }
+        .message-line:nth-child(4) { animation-delay: 2s; }
+
+        @keyframes fadeInLine {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message strong {
+            color: #667eea;
+            font-size: 26px;
+            display: block;
+            margin-top: 20px;
         }
 
         /* 도움 리소스 섹션 */
         .help-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
+            padding: 40px;
             border-radius: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             text-align: left;
         }
 
         .help-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             text-align: center;
         }
 
@@ -107,34 +182,36 @@
         }
 
         .help-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
 
         .help-item {
             background: rgba(255, 255, 255, 0.1);
-            padding: 15px 20px;
-            border-radius: 12px;
+            padding: 20px 25px;
+            border-radius: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            cursor: pointer;
         }
 
         .help-item:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .help-item-name {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
         }
 
         .help-item-number {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
             letter-spacing: 1px;
         }
@@ -147,25 +224,25 @@
 
         .help-footer {
             text-align: center;
-            margin-top: 20px;
-            font-size: 16px;
+            margin-top: 30px;
+            font-size: 18px;
             font-weight: 600;
             opacity: 0.95;
-            line-height: 1.6;
+            line-height: 1.8;
         }
 
         /* 버튼 */
         .button-group {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             justify-content: center;
         }
 
         .btn {
-            padding: 16px 40px;
+            padding: 18px 50px;
             border: none;
             border-radius: 50px;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -196,16 +273,16 @@
         /* 모바일 대응 */
         @media (max-width: 768px) {
             .container {
+                width: 95%;
                 padding: 40px 25px;
-                margin: 20px;
             }
 
             .celebration {
-                font-size: 48px;
+                font-size: 60px;
             }
 
             .title {
-                font-size: 26px;
+                font-size: 28px;
             }
 
             .subtitle {
@@ -213,12 +290,16 @@
             }
 
             .message {
-                font-size: 16px;
-                padding: 20px;
+                font-size: 18px;
+                padding: 25px;
             }
 
-            .help-title {
+            .message strong {
                 font-size: 20px;
+            }
+
+            .help-list {
+                grid-template-columns: 1fr;
             }
 
             .help-item {
@@ -227,55 +308,21 @@
                 gap: 8px;
             }
 
-            .help-item-number {
-                font-size: 20px;
-            }
-
             .button-group {
                 flex-direction: column;
             }
 
             .btn {
                 width: 100%;
-                padding: 14px 30px;
-                font-size: 16px;
-            }
-        }
-
-        /* 별 애니메이션 */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: -1;
-        }
-
-        .star {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s ease-in-out infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
+                padding: 16px 30px;
+                font-size: 18px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 배경 별 효과 -->
-    <div class="stars" id="stars"></div>
+    <!-- 꽃 이모지 배경 효과 -->
+    <div class="flower-container" id="flowerContainer"></div>
 
     <div class="container">
         <div class="celebration">🎉</div>
@@ -284,10 +331,10 @@
         <p class="subtitle">정말 수고 많았어요. 여기까지 오는 게 쉽지 않았을 거예요.</p>
 
         <div class="message">
-            "살아있다는 건,<br>
-            아직 쓰지 않은 이야기 한 장을<br>
-            가지고 있다는 뜻이에요."<br><br>
-            <strong>너의 생명은 세상에서<br>단 하나뿐인 빛이에요.</strong>
+            <div class="message-line">"살아있다는 건,</div>
+            <div class="message-line">아직 쓰지 않은 이야기 한 장을</div>
+            <div class="message-line">가지고 있다는 뜻이에요."</div>
+            <strong class="message-line">너의 생명은 세상에서<br>단 하나뿐인 빛이에요.</strong>
         </div>
 
         <!-- 도움 리소스 -->
@@ -324,7 +371,7 @@
                         <div class="help-item-name">카카오톡 상담</div>
                         <div class="help-item-desc">익명 채팅상담</div>
                     </div>
-                    <div class="help-item-number" style="font-size: 16px;">@마음이음</div>
+                    <div class="help-item-number" style="font-size: 18px;">@마음이음</div>
                 </div>
             </div>
 
@@ -359,23 +406,35 @@
                     anchor: 'middle'
                 }, '*');
 
-                // 별 생성
-                createStars();
+                // 꽃 이모지 생성
+                createFlowers();
             }
         });
 
-        // 별 생성 (배경 효과)
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const starCount = 50;
+        // 페이지 로드 시 꽃 이모지 생성
+        window.addEventListener('DOMContentLoaded', () => {
+            createFlowers();
+        });
 
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                starsContainer.appendChild(star);
+        // 꽃 이모지 생성 함수
+        function createFlowers() {
+            const flowerContainer = document.getElementById('flowerContainer');
+            const flowerEmojis = ['🌸', '🌺', '🌼', '🌻', '🌷', '🥀', '💐', '🏵️'];
+            const flowerCount = 30;
+
+            for (let i = 0; i < flowerCount; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+                
+                // 랜덤 위치와 속도
+                flower.style.left = Math.random() * 100 + '%';
+                flower.style.animationDuration = (Math.random() * 10 + 15) + 's'; // 15-25초
+                flower.style.animationDelay = Math.random() * 5 + 's';
+                flower.style.setProperty('--sway', (Math.random() * 100 - 50) + 'px');
+                flower.style.fontSize = (Math.random() * 10 + 20) + 'px'; // 20-30px
+                
+                flowerContainer.appendChild(flower);
             }
         }
 
@@ -386,33 +445,35 @@
             }, '*');
         }
 
-        // 경험 공유하기 (선택사항)
+        // 경험 공유하기
         function shareExperience() {
-            // 게시판이나 다른 공간으로 이동
             window.parent.postMessage({
                 type: 'shareExperience'
             }, '*');
             
-            // 또는 간단히 완료 메시지
             alert('여러분의 이야기를 나누는 것은 다른 사람에게 큰 힘이 됩니다. 💕');
             closeWidget();
         }
 
-        // 전화번호 클릭 시 복사 (선택사항)
+        // 전화번호 클릭 시 동작
         document.querySelectorAll('.help-item').forEach(item => {
             item.addEventListener('click', function() {
                 const number = this.querySelector('.help-item-number').textContent;
                 const name = this.querySelector('.help-item-name').textContent;
                 
                 // 모바일에서는 전화 걸기
-                if (isMobile && number.match(/^\d+$/)) {
-                    window.location.href = `tel:${number}`;
+                if (isMobile && number.match(/^[\d-]+$/)) {
+                    window.location.href = `tel:${number.replace(/-/g, '')}`;
                 } else {
                     // PC에서는 클립보드 복사
                     if (navigator.clipboard) {
                         navigator.clipboard.writeText(number).then(() => {
                             showToast(`${name} 번호가 복사되었습니다: ${number}`);
+                        }).catch(() => {
+                            showToast(`번호: ${number}`);
                         });
+                    } else {
+                        showToast(`번호: ${number}`);
                     }
                 }
             });
@@ -423,15 +484,16 @@
             const toast = document.createElement('div');
             toast.style.cssText = `
                 position: fixed;
-                bottom: 30px;
+                bottom: 50px;
                 left: 50%;
                 transform: translateX(-50%);
-                background: rgba(0, 0, 0, 0.8);
+                background: rgba(0, 0, 0, 0.85);
                 color: white;
-                padding: 15px 25px;
-                border-radius: 25px;
-                font-size: 14px;
+                padding: 16px 30px;
+                border-radius: 30px;
+                font-size: 16px;
                 z-index: 10000;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
                 animation: fadeIn 0.3s ease;
             `;
             toast.textContent = message;
@@ -440,10 +502,38 @@
             setTimeout(() => {
                 toast.style.animation = 'fadeOut 0.3s ease';
                 setTimeout(() => {
-                    document.body.removeChild(toast);
+                    if (toast.parentNode) {
+                        document.body.removeChild(toast);
+                    }
                 }, 300);
-            }, 2000);
+            }, 2500);
         }
+
+        // 페이드 애니메이션 스타일 추가
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+            }
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(-10px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
