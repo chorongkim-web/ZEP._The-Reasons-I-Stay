@@ -80,13 +80,11 @@
         }
 
         @keyframes fall {
-            0% {
-                top: -10%;
+            from {
                 transform: translateX(0) rotate(0deg);
                 opacity: 0.9;
             }
-            100% {
-                top: 110%;
+            to {
                 transform: translateX(var(--sway)) rotate(360deg);
                 opacity: 0.5;
             }
@@ -525,8 +523,17 @@
                 
                 // 랜덤 위치와 속도
                 flower.style.left = Math.random() * 100 + '%';
-                flower.style.animationDuration = (Math.random() * 10 + 20) + 's'; // 20-30초
-                flower.style.animationDelay = Math.random() * 8 + 's';
+                
+                // 초기 위치를 화면 전체에 랜덤하게 분산 (-100% ~ 100%)
+                const randomStartPosition = Math.random() * 200 - 100;
+                flower.style.top = randomStartPosition + '%';
+                
+                const duration = Math.random() * 10 + 20; // 20-30초
+                flower.style.animationDuration = duration + 's';
+                
+                // animationDelay를 음수로 설정하여 이미 진행 중인 것처럼 보이게 함
+                flower.style.animationDelay = -(Math.random() * duration) + 's';
+                
                 flower.style.setProperty('--sway', (Math.random() * 100 - 50) + 'px');
                 flower.style.fontSize = (Math.random() * 10 + 20) + 'px'; // 20-30px
                 
